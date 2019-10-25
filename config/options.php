@@ -76,7 +76,11 @@ return [
         '4' => 'en pruebas',
         '5' => 'Completada',
         '6' => 'Cancelada',
-    ]
+    ],
+    'status_emp' => [
+        '1' => 'Activo',
+        '2' => 'Inactivo',
+    ],
 ];
 
 

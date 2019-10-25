@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Planeación
+            Empleados
         </h1>
    </section>
    <div class="content">
@@ -11,9 +11,9 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($historiasDetalle, ['route' => ['historiasDetalles.update', $historiasDetalle->id], 'method' => 'patch']) !!}
+                   {!! Form::model($empleados, ['route' => ['empleados.update', $empleados->id], 'method' => 'patch']) !!}
 
-                        @include('historias_detalles.fields')
+                        @include('empleados.fields')
 
                    {!! Form::close() !!}
                </div>

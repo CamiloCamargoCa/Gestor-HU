@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-10-2019 a las 05:22:16
+-- Tiempo de generación: 25-10-2019 a las 23:40:24
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.1.25
 
@@ -43,10 +43,34 @@ CREATE TABLE `criterios` (
 --
 
 INSERT INTO `criterios` (`id`, `id_proyecto`, `id_historia`, `descripcion`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 2, 1, '- La mercancía debe estar registrada para recibo en base de datos\r\n- Al de recibo se debe entregar un registro donde se muestren todo los productos\r\n- El producto debe tener una marca de identificación si es un producto refrigerante, o de bodega', '2019-10-09 03:42:02', '2019-10-09 03:56:37', NULL),
-(2, 2, 2, '- El producto nuevo debe aumentar el inventario registrado e base de datos\r\n- El producto almacenado debe coincidir  con el recibido\r\n- El producto de refrigeración debe ir en nevera\r\n- El producto debe estar listo para ser expuesto en el punto', '2019-10-09 03:56:27', '2019-10-09 03:56:27', NULL),
-(3, 2, 3, '- La venta debe quedar registrado código, precio, cantidad de producto, total.\r\n- Si es un domicilio, el producto debe ir sellado y entregado al domiciliario', '2019-10-09 03:59:04', '2019-10-09 03:59:04', NULL),
-(4, 1, 4, '- El domiciliario debe ir a punto a recoger el domicilio\r\n- El domiciliario solo puede entregar producto al cliente y dirección registrada en sistema\r\n- El domiciliario deberá informar producto cancelado y devolver producto al punto de venta', '2019-10-09 04:01:46', '2019-10-09 04:01:46', NULL);
+(1, 1, 1, '-Solo se debe recibir los producto que indique el manifiesto de recibo\r\n-Los productos que requieren refrigeración debe ir en la CAVA\r\n-Los productos debe rotar dejando abajo los producto mas nuevo y dejando encima y a la mano los producto con fecha mas reciente para su vencimiento', '2019-10-25 21:34:08', '2019-10-25 21:34:08', NULL),
+(2, 1, 2, '-Solo se debe  procurar surtir mercancía con fecha mas próxima a vencimiento\r\n-Se debe garantizar no dejar huecos en puntos de exhibición', '2019-10-25 21:35:36', '2019-10-25 21:35:36', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleados`
+--
+
+CREATE TABLE `empleados` (
+  `id` int(11) NOT NULL,
+  `cedula` int(11) DEFAULT NULL,
+  `nombre` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `salario` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Estado` int(11) DEFAULT NULL,
+  `id_roll` int(11) DEFAULT NULL,
+  `id_proyecto` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `empleados`
+--
+
+INSERT INTO `empleados` (`id`, `cedula`, `nombre`, `salario`, `Estado`, `id_roll`, `id_proyecto`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1013456789, 'Juan  Carlos Sanchez', '1200000', 1, 1, 1, '2019-10-25 21:39:23', '2019-10-25 21:39:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -69,6 +93,14 @@ CREATE TABLE `historias_detalle` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `historias_detalle`
+--
+
+INSERT INTO `historias_detalle` (`id`, `id_historia`, `tamaño`, `esfuerzo_horas`, `num_sprint`, `num_release`, `id_usuario`, `id_desarrollador`, `id_tester`, `estado`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 'S', 16, 1, 1, 4, 1, 2, 2, '2019-10-25 21:38:30', '2019-10-25 21:38:30', NULL),
+(2, 2, 'S', 16, 2, 1, 4, 3, 2, 1, '2019-10-25 21:38:59', '2019-10-25 21:38:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -95,10 +127,8 @@ CREATE TABLE `historias_usuarios` (
 --
 
 INSERT INTO `historias_usuarios` (`id`, `id_proyecto`, `tipo_historia`, `titulo_historia`, `roll_id`, `descripcion`, `reque_interfaz`, `dependencia`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 2, 'Funcional', 'Recivo de Mercancia', 7, 'La persona de Recibo necesita revivir y registrar mercancía de proveedores, para garantizar tener materia prima para la generación de productos que serán vendidos', 'imagen.jpg', NULL, '2019-10-09 03:32:23', '2019-10-09 03:41:44', NULL),
-(2, 2, 'Funcional', 'Registro y almacen de producto', 4, 'El surtidor debe registrar y almacenar los productos que llegan al punto de venta, para poder tener organizados y listo los productos para poder vender', 'imagen2.jpg', 1, '2019-10-09 03:40:18', '2019-10-09 03:40:18', NULL),
-(3, 2, 'Funcional', 'Venta de Producto', 5, 'El vendedor de producto requiere hacer una venta para poder generar ganancias al punto de venta', 'imagen3.jpg', 2, '2019-10-09 03:46:17', '2019-10-09 03:46:17', NULL),
-(4, 2, 'Funcional', 'Reparto de producto', 6, 'Como Domiciliario requiere repartir un producto para consolidar una venta y generar una ganancia propia', 'imagen4.jpg', 3, '2019-10-09 03:49:20', '2019-10-09 03:49:20', NULL);
+(1, 1, 'Funcional', 'Almacenamiento de Mercancía', 1, 'Como Bodeguero requiero recibir, organizar y almacenar los productos en las diferentes bodegas, para tener mercancía lista por si se necesita surtir punto de venta', 'RequeInterfaz/1/lpd4kZo8tQ783nPQGa6iOuv8aC28lVZCUhFbgXCo.docx', NULL, '2019-10-25 21:25:59', '2019-10-25 21:25:59', NULL),
+(2, 1, 'Funcional', 'Surtir Punto de Venta', 2, 'Como Surtidor requiero poner en exhibición los producto de bodega para poder mostrar al publico los producto que se encuentran a la venta en el punto o sede del negocio', NULL, 1, '2019-10-25 21:32:08', '2019-10-25 21:32:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -117,45 +147,20 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(16, '2019_10_06_001546_create_criterios_table', 1),
-(17, '2019_10_06_001546_create_historias_detalle_table', 1),
-(18, '2019_10_06_001546_create_historias_usuarios_table', 1),
-(19, '2019_10_06_001546_create_proyectos_table', 1),
-(20, '2019_10_06_001546_create_rolles_table', 1),
-(21, '2019_10_06_001546_create_usuarios_table', 1),
-(22, '2019_10_06_001548_add_foreign_keys_to_criterios_table', 1),
-(23, '2019_10_06_001548_add_foreign_keys_to_historias_detalle_table', 1),
-(24, '2019_10_06_001548_add_foreign_keys_to_historias_usuarios_table', 1),
-(25, '2019_10_06_001548_add_foreign_keys_to_rolles_table', 1),
-(26, '2019_10_06_001548_add_foreign_keys_to_usuarios_table', 1),
-(30, '2019_10_06_225539_create_password_resets_table', 0),
-(33, '2019_10_06_225539_create_users_table', 0),
-(42, '2019_10_06_225539_create_criterios_table', 2),
-(43, '2019_10_06_225539_create_historias_detalle_table', 2),
-(44, '2019_10_06_225539_create_historias_usuarios_table', 2),
-(45, '2019_10_06_225539_create_proyectos_table', 2),
-(46, '2019_10_06_225539_create_rolles_table', 2),
-(47, '2019_10_06_225539_create_usuarios_table', 2),
-(48, '2019_10_06_225541_add_foreign_keys_to_criterios_table', 2),
-(49, '2019_10_06_225541_add_foreign_keys_to_historias_detalle_table', 2),
-(50, '2019_10_06_225541_add_foreign_keys_to_historias_usuarios_table', 2),
-(51, '2019_10_06_225541_add_foreign_keys_to_rolles_table', 2),
-(52, '2019_10_06_225541_add_foreign_keys_to_usuarios_table', 2),
-(56, '2019_10_08_215613_create_password_resets_table', 0),
-(59, '2019_10_08_215613_create_users_table', 0),
-(66, '2014_10_12_000000_create_users_table', 3),
-(67, '2014_10_12_100000_create_password_resets_table', 3),
-(68, '2019_10_08_215613_create_criterios_table', 3),
-(69, '2019_10_08_215613_create_historias_detalle_table', 3),
-(70, '2019_10_08_215613_create_historias_usuarios_table', 3),
-(71, '2019_10_08_215613_create_proyectos_table', 3),
-(72, '2019_10_08_215613_create_rolles_table', 3),
-(73, '2019_10_08_215613_create_usuarios_table', 3),
-(74, '2019_10_08_215615_add_foreign_keys_to_criterios_table', 3),
-(75, '2019_10_08_215615_add_foreign_keys_to_historias_detalle_table', 3),
-(76, '2019_10_08_215615_add_foreign_keys_to_historias_usuarios_table', 3),
-(77, '2019_10_08_215615_add_foreign_keys_to_rolles_table', 3),
-(78, '2019_10_08_215615_add_foreign_keys_to_usuarios_table', 3);
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2019_10_20_192907_create_criterios_table', 1),
+(4, '2019_10_20_192907_create_empleados_table', 1),
+(5, '2019_10_20_192907_create_historias_detalle_table', 1),
+(6, '2019_10_20_192907_create_historias_usuarios_table', 1),
+(7, '2019_10_20_192907_create_proyectos_table', 1),
+(8, '2019_10_20_192907_create_rolles_table', 1),
+(9, '2019_10_20_192907_create_usuarios_table', 1),
+(10, '2019_10_20_192909_add_foreign_keys_to_criterios_table', 1),
+(11, '2019_10_20_192909_add_foreign_keys_to_empleados_table', 1),
+(12, '2019_10_20_192909_add_foreign_keys_to_historias_detalle_table', 1),
+(13, '2019_10_20_192909_add_foreign_keys_to_historias_usuarios_table', 1),
+(14, '2019_10_20_192909_add_foreign_keys_to_rolles_table', 1);
 
 -- --------------------------------------------------------
 
@@ -188,8 +193,10 @@ CREATE TABLE `proyectos` (
 --
 
 INSERT INTO `proyectos` (`id`, `nombre`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Domicity', '2019-10-09 03:08:41', '2019-10-09 03:08:52', NULL),
-(2, 'Yutcomidas', '2019-10-09 03:08:57', '2019-10-09 03:08:57', NULL);
+(1, 'Yutcomidas', '2019-10-25 21:06:25', '2019-10-25 21:06:25', NULL),
+(2, 'Domicity', '2019-10-25 21:06:31', '2019-10-25 21:06:31', NULL),
+(3, 'Domicilios.com', '2019-10-25 21:06:47', '2019-10-25 21:06:47', NULL),
+(4, 'D1', '2019-10-25 21:06:55', '2019-10-25 21:06:55', NULL);
 
 -- --------------------------------------------------------
 
@@ -211,13 +218,20 @@ CREATE TABLE `rolles` (
 --
 
 INSERT INTO `rolles` (`id`, `nombre`, `id_proyecto`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Cajero', 1, '2019-10-09 03:10:41', '2019-10-09 03:10:41', NULL),
-(2, 'Despachador', 1, '2019-10-09 03:10:51', '2019-10-09 03:10:51', NULL),
-(3, 'Mensajero', 1, '2019-10-09 03:11:01', '2019-10-09 03:11:01', NULL),
-(4, 'Surtidor', 2, '2019-10-09 03:11:37', '2019-10-09 03:11:37', NULL),
-(5, 'Vendedor', 2, '2019-10-09 03:11:46', '2019-10-09 03:11:46', NULL),
-(6, 'Domiciliario', 2, '2019-10-09 03:12:02', '2019-10-09 03:12:57', NULL),
-(7, 'Recivo', 2, '2019-10-09 03:15:59', '2019-10-09 03:15:59', NULL);
+(1, 'Bodeguero', 1, '2019-10-25 21:13:42', '2019-10-25 21:29:56', NULL),
+(2, 'Surtidor', 1, '2019-10-25 21:14:36', '2019-10-25 21:14:36', NULL),
+(3, 'Vendedor', 1, '2019-10-25 21:14:52', '2019-10-25 21:14:52', NULL),
+(4, 'Cajero', 1, '2019-10-25 21:15:03', '2019-10-25 21:15:03', NULL),
+(5, 'Empacador', 1, '2019-10-25 21:15:17', '2019-10-25 21:15:17', NULL),
+(6, 'Domiciliario', 1, '2019-10-25 21:15:34', '2019-10-25 21:15:34', NULL),
+(7, 'Asesor', 2, '2019-10-25 21:20:07', '2019-10-25 21:20:07', NULL),
+(8, 'Despachador', 2, '2019-10-25 21:20:19', '2019-10-25 21:20:19', NULL),
+(9, 'Mensajero', 2, '2019-10-25 21:20:33', '2019-10-25 21:20:33', NULL),
+(10, 'Recibo', 4, '2019-10-25 21:20:51', '2019-10-25 21:20:59', NULL),
+(11, 'Punto Tienda', 4, '2019-10-25 21:21:16', '2019-10-25 21:21:16', NULL),
+(12, 'Cajero Empacador', 4, '2019-10-25 21:21:33', '2019-10-25 21:21:33', NULL),
+(13, 'Cordinador', 3, '2019-10-25 21:21:54', '2019-10-25 21:21:54', NULL),
+(14, 'Repartidor', 3, '2019-10-25 21:22:08', '2019-10-25 21:22:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -242,8 +256,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Camilo Andres Camargo Cardenas', 'admin@mail.com', NULL, '$2y$10$8yQXgCP2P/218QaZWT01z.DvGVGNTOg9BYTfJLQxWpkk6aSbbQ7vm', NULL, '2019-10-09 03:06:54', '2019-10-09 03:06:54', NULL),
-(2, 'Juan David Dominguez', 'admin1@mail.com', NULL, '$2y$10$8yQXgCP2P/218QaZWT01z.DvGVGNTOg9BYTfJLQxWpkk6aSbbQ7vm', NULL, '2019-10-09 04:47:09', '2019-10-09 04:47:09', NULL);
+(1, 'Camilo Andres Camargo Cardenas', 'admin@mail.com', NULL, '$2y$10$.z08r21wSm0OSDDtTJEzIu44q4em8dSnls.7j7Mj1EfezjAxYqxOO', NULL, '2019-10-25 20:20:52', '2019-10-25 20:20:52', NULL),
+(2, 'Lina Maria Martinez', 'admin1@mail.com', NULL, '$2y$10$W0Y4DFBJc8XkAOKFYCrB6OsEIr5QtkFL92zptnQpV0OSSRAZgnb46', NULL, '2019-10-25 20:22:22', '2019-10-25 20:22:22', NULL),
+(3, 'Juan David Dominguez', 'admin2@mail.com', NULL, '$2y$10$099F0GSwi1HNUqtQr7IN7.4E0SxTK0ciZWH2a8pTH57gMXqQAly/G', NULL, '2019-10-25 20:23:24', '2019-10-25 20:23:24', NULL),
+(4, 'Sebastiano Barroco', 'admin3@mail.com', NULL, '$2y$10$WZPJx88gabeQSK0iqvEN4u63bGKY71ShZamq5MKH7Em3pohnM.QKi', NULL, '2019-10-25 21:05:07', '2019-10-25 21:05:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -255,7 +271,6 @@ CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `operatividad` tinyint(1) DEFAULT NULL,
-  `roll_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -265,9 +280,11 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `user_id`, `operatividad`, `roll_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 2, 6, '2019-10-09 06:12:31', '2019-10-09 07:45:29', NULL),
-(2, 2, 2, 2, '2019-10-09 07:45:45', '2019-10-09 07:45:53', NULL);
+INSERT INTO `usuarios` (`id`, `user_id`, `operatividad`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 1, '2019-10-25 21:05:26', '2019-10-25 21:05:26', NULL),
+(2, 2, 2, '2019-10-25 21:05:37', '2019-10-25 21:06:07', NULL),
+(3, 3, 1, '2019-10-25 21:05:45', '2019-10-25 21:06:15', NULL),
+(4, 4, 1, '2019-10-25 21:05:52', '2019-10-25 21:05:52', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -280,6 +297,14 @@ ALTER TABLE `criterios`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_proyecto` (`id_proyecto`),
   ADD KEY `id_historia` (`id_historia`);
+
+--
+-- Indices de la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_roll` (`id_roll`),
+  ADD KEY `id_proyecto` (`id_proyecto`);
 
 --
 -- Indices de la tabla `historias_detalle`
@@ -332,8 +357,7 @@ ALTER TABLE `users`
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `roll_id` (`roll_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -343,49 +367,55 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `criterios`
 --
 ALTER TABLE `criterios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `historias_detalle`
 --
 ALTER TABLE `historias_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `historias_usuarios`
 --
 ALTER TABLE `historias_usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `rolles`
 --
 ALTER TABLE `rolles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
@@ -397,6 +427,13 @@ ALTER TABLE `usuarios`
 ALTER TABLE `criterios`
   ADD CONSTRAINT `criterios_ibfk_1` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`),
   ADD CONSTRAINT `criterios_ibfk_2` FOREIGN KEY (`id_historia`) REFERENCES `historias_usuarios` (`id`);
+
+--
+-- Filtros para la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  ADD CONSTRAINT `empleados_ibfk_1` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`),
+  ADD CONSTRAINT `empleados_ibfk_2` FOREIGN KEY (`id_roll`) REFERENCES `rolles` (`id`);
 
 --
 -- Filtros para la tabla `historias_detalle`
@@ -416,12 +453,6 @@ ALTER TABLE `historias_usuarios`
 --
 ALTER TABLE `rolles`
   ADD CONSTRAINT `rolles_ibfk_1` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`);
-
---
--- Filtros para la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`roll_id`) REFERENCES `rolles` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -33,3 +33,5 @@ Route::resource('rolles', 'RollesController');
 Route::resource('users', 'UsersController');
 
 Route::resource('usuarios', 'UsuariosController');
+
+Route::resource('empleados', 'EmpleadosController');

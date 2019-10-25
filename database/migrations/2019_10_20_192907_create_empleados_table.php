@@ -14,11 +14,11 @@ class CreateEmpleadosTable extends Migration {
 	{
 		Schema::create('empleados', function(Blueprint $table)
 		{
-			$table->integer('id')->primary();
-			$table->integer('cedulanombre')->nullable();
+			$table->integer('id', true);
+			$table->integer('cedula')->nullable();
 			$table->string('nombre', 120)->nullable();
 			$table->string('salario', 60)->nullable();
-			$table->boolean('Estado')->nullable();
+			$table->integer('Estado')->nullable();
 			$table->integer('id_roll')->nullable()->index('id_roll');
 			$table->integer('id_proyecto')->nullable()->index('id_proyecto');
 			$table->timestamps();
