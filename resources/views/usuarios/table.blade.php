@@ -3,9 +3,9 @@
         <thead>
             <tr>
                 <th>Id Registro</th>
-                <th>User Id</th>
+                <th>User</th>
                 <th>Operatividad</th>
-                <th>Roll Id</th>
+                {{-- <th>Roll Id</th> --}}
                 <th colspan="3">Acción</th>
             </tr>
         </thead>
@@ -17,7 +17,7 @@
                 <td>{!! $usuarios->user_nombre !!}</td>
             <td>{!! $usuarios->ope_nombre !!}</td>
             {{-- <td>{!! $usuarios->operatividad !!}</td> --}}
-            <td>{!! $usuarios->rolle_nombre !!}</td>
+            {{-- <td>{!! $usuarios->rolle_nombre !!}</td> --}}
             {{-- <td>{!! $usuarios->roll_id !!}</td> --}}
                 <td>
                     {!! Form::open(['route' => ['usuarios.destroy', $usuarios->id], 'method' => 'delete']) !!}

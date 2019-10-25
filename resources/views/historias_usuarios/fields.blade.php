@@ -28,11 +28,19 @@
     {!! Form::textarea('descripcion', null, ['class' => 'form-control']) !!}
 </div>
 
+
+<!-- Image Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('reque_interfaz', 'Requerimientos Interfaz:') !!}
+    {!! Form::file('reque_interfaz') !!}
+</div>
+<div class="clearfix"></div>
+
 <!-- Reque Interfaz Field -->
-<div class="form-group col-sm-12 col-lg-12">
+{{-- <div class="form-group col-sm-12 col-lg-12">
     <b>{!! Form::label('reque_interfaz', 'Reque Interfaz:') !!}</b>
     {!! Form::textarea('reque_interfaz', null, ['class' => 'form-control']) !!}
-</div>
+</div> --}}
 
 <!-- Dependencia Field -->
 <div class="form-group col-sm-12 col-lg-12">

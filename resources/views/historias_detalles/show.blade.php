@@ -11,7 +11,7 @@
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
                     @include('historias_detalles.show_fields')
-                    <a href="{!! route('historiasDetalles.index') !!}" class="btn btn-default">Back</a>
+                    <a href="{!! route('historiasDetalles.index') !!}" class="btn btn-default">Atras</a>
                 </div>
             </div>
         </div>

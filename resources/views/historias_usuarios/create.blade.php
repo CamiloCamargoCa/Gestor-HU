@@ -12,7 +12,7 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'historiasUsuarios.store']) !!}
+                    {!! Form::open(['route' => 'historiasUsuarios.store','enctype' => 'multipart/form-data']) !!}
 
                         @include('historias_usuarios.fields')
 

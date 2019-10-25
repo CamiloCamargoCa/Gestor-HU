@@ -12,7 +12,7 @@
 
 <!-- Descripcion Field -->
 <div class="form-group col-sm-12 col-lg-12">
-    <b>{!! Form::label('descripcion', 'Descripcion:') !!}</b>
+    <b>{!! Form::label('descripcion', 'Descripcion de Criterios:') !!}</b>
     {!! Form::textarea('descripcion', null, ['class' => 'form-control']) !!}
 </div>
 

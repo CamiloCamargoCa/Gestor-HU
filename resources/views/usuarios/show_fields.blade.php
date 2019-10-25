@@ -24,17 +24,14 @@
             <p>{!! $usuarios->ope_nombre !!}</p>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    {{-- <div class="col-xs-12 col-sm-6"> --}}
         <!-- Roll Id Field -->
-        <div class="form-group">
-            <b>{!! Form::label('roll_id', 'Roll Id:') !!}</b>
+        {{-- <div class="form-group"> --}}
+            {{-- <b>{!! Form::label('roll_id', 'Roll Id:') !!}</b> --}}
             {{-- <p>{!! $usuarios->roll_id !!}</p> --}}
-            <p>{!! $usuarios->roll_nombre !!}</p>
-        </div>
-    </div>
-</div>
-
-<div class="row">
+            {{-- <p>{!! $usuarios->roll_nombre !!}</p> --}}
+        {{-- </div> --}}
+    {{-- </div> --}}
     <div class="col-xs-12 col-sm-6">
         <!-- Created At Field -->
         <div class="form-group">
@@ -42,6 +39,9 @@
             <p>{!! $usuarios->created_at !!}</p>
         </div>
     </div>
+</div>
+
+<div class="row">
     <div class="col-xs-12 col-sm-6">
         <!-- Updated At Field -->
         <div class="form-group">

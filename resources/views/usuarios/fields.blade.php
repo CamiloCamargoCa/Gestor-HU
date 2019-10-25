@@ -15,10 +15,10 @@
 </div>
 
 <!-- Roll Id Field -->
-<div class="form-group col-sm-6">
+{{-- <div class="form-group col-sm-6">
     <b>{!! Form::label('roll_id', 'Roll:') !!}</b>
     {!! Form::select('roll_id', $rolles, null, ['class' => 'form-control', 'placeholder'=>'Seleccione una Opción']) !!}
-</div>
+</div> --}}
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

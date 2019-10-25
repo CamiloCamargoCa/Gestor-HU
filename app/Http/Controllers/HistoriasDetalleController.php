@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use Auth;
 
 class HistoriasDetalleController extends AppBaseController
 {
@@ -31,6 +32,73 @@ class HistoriasDetalleController extends AppBaseController
     {
         $historiasDetalles = $this->historiasDetalleRepository->all();
 
+        //devuelve la categoria de un producto
+        $histo_items_id=[];
+        $tester_items_id=[];
+        $programer_items_id=[];
+        $user_items_id=[];
+        $statu_items_id=[];
+        foreach ($historiasDetalles as $key => $historiasDetalle) {
+            $histo_items_id[]=$historiasDetalle->id_historia;
+            $tester_items_id[]=$historiasDetalle->id_tester;
+            $programer_items_id[]=$historiasDetalle->id_desarrollador;
+            $user_items_id[]=$historiasDetalle->id_usuario;
+            $statu_items_id[]=$historiasDetalle->estado;
+        }
+
+         $historias = \App\Models\HistoriasUsuarios::whereIn('id',$histo_items_id)->select('titulo_historia','id')->get();
+         $testers = \App\Models\Users::whereIn('id',$tester_items_id)->select('name','id')->get();
+         $programers = \App\Models\Users::whereIn('id',$programer_items_id)->select('name','id')->get();
+         $usuarios = \App\Models\Users::whereIn('id',$user_items_id)->select('name','id')->get();
+
+         // trae stados
+        $status = config('options.status_hu');
+
+         // mostrar historias de usuario
+         foreach ($historiasDetalles as $key => $historiasDetalle) {
+            foreach ($historias as $key2 => $historia) {
+                if ($historiasDetalle->id_historia==$historia->id) {
+                    $historiasDetalles[$key]->historia_nombre = $historia->titulo_historia;
+                }
+            }
+        }
+
+        // mostrar tester
+         foreach ($historiasDetalles as $key => $historiasDetalle) {
+            foreach ($testers as $key2 => $tester) {
+                if ($historiasDetalle->id_tester==$tester->id) {
+                    $historiasDetalles[$key]->tester_nombre = $tester->name;
+                }
+            }
+        }
+
+        // mostrar programadores
+         foreach ($historiasDetalles as $key => $historiasDetalle) {
+            foreach ($programers as $key2 => $programer) {
+                if ($historiasDetalle->id_desarrollador==$programer->id) {
+                    $historiasDetalles[$key]->programer_nombre = $programer->name;
+                }
+            }
+        }
+
+        // mostrar usuario de auditoria
+         foreach ($historiasDetalles as $key => $historiasDetalle) {
+            foreach ($usuarios as $key2 => $usuario) {
+                if ($historiasDetalle->id_usuario==$usuario->id) {
+                    $historiasDetalles[$key]->usuario_nombre = $usuario->name;
+                }
+            }
+        }
+
+        // mostrar usuario de auditoria
+         foreach ($historiasDetalles as $key => $historiasDetalle) {
+            foreach ($status as $key2 => $statu) {
+                if ($historiasDetalle->estado==$key2) {
+                    $historiasDetalles[$key]->statu_nombre = $statu;
+                }
+            }
+        }
+
         return view('historias_detalles.index')
             ->with('historiasDetalles', $historiasDetalles);
     }
@@ -42,7 +110,25 @@ class HistoriasDetalleController extends AppBaseController
      */
     public function create()
     {
-        return view('historias_detalles.create');
+         // trae otras historias de usuario
+        $historias = \App\Models\HistoriasUsuarios::pluck('titulo_historia','id');
+
+        // trae el tamaño de la historia
+        $tamano = config('options.tamano_estimado');
+
+        // trae el estado de la historia
+        $status_hu = config('options.status_hu');
+
+        // tester
+        $tester = \App\Models\Usuarios::join('users','users.id','user_id')->where('usuarios.operatividad',2)->pluck('name','user_id');
+
+        // programador
+        $programer = \App\Models\Usuarios::join('users','users.id','user_id')->where('usuarios.operatividad',1)->pluck('name','user_id');
+
+        // id usuario actual que crea el registro
+        $value_id = Auth::id();
+   
+        return view('historias_detalles.create')->with(['historias'=>$historias,'tamano'=>$tamano,'status_hu'=>$status_hu,'tester'=>$tester,'programer'=>$programer,'value_id'=>$value_id]);
     }
 
     /**
@@ -80,6 +166,30 @@ class HistoriasDetalleController extends AppBaseController
             return redirect(route('historiasDetalles.index'));
         }
 
+        //nombre de historias
+        $historias = \App\Models\HistoriasUsuarios::where('id',$historiasDetalle->id_usuario)->select('titulo_historia','id')->first();
+        $historiasDetalle->historia_nombre = $historias->titulo_historia ?? '';
+
+         //nombre de usuarios
+        $usuarios = \App\Models\Users::where('id',$historiasDetalle->id_usuario)->select('name','id')->first();
+        $historiasDetalle->usuario_nombre = $usuarios->name ?? '';
+
+         //nombre de testers
+        $testers = \App\Models\Users::where('id',$historiasDetalle->id_tester)->select('name','id')->first();
+        $historiasDetalle->tester_nombre = $testers->name ?? '';
+
+         //nombre de testers
+        $programers = \App\Models\Users::where('id',$historiasDetalle->id_desarrollador)->select('name','id')->first();
+        $historiasDetalle->programer_nombre = $programers->name ?? '';
+
+        // trae el estado de la historia
+        $status_hu = config('options.status_hu');
+        foreach ($status_hu as $key => $value) {
+            if ($historiasDetalle->estado==$key) {
+                $historiasDetalle->status_nombre = $value ?? '';
+            }
+        }
+
         return view('historias_detalles.show')->with('historiasDetalle', $historiasDetalle);
     }
 
@@ -100,7 +210,25 @@ class HistoriasDetalleController extends AppBaseController
             return redirect(route('historiasDetalles.index'));
         }
 
-        return view('historias_detalles.edit')->with('historiasDetalle', $historiasDetalle);
+        // trae otras historias de usuario
+        $historias = \App\Models\HistoriasUsuarios::pluck('titulo_historia','id');
+
+        // trae el tamaño de la historia
+        $tamano = config('options.tamano_estimado');
+
+        // trae el status de la historia
+        $status_hu = config('options.status_hu');
+
+        // tester
+        $tester = \App\Models\Usuarios::join('users','users.id','user_id')->where('usuarios.operatividad',2)->pluck('name','user_id');
+
+        // programador
+        $programer = \App\Models\Usuarios::join('users','users.id','user_id')->where('usuarios.operatividad',1)->pluck('name','user_id');
+
+        // id usuario actual que crea el registro
+        $value_id = Auth::id();
+
+        return view('historias_detalles.edit')->with(['historiasDetalle'=>$historiasDetalle,'historias'=>$historias,'tamano'=>$tamano,'status_hu'=>$status_hu,'tester'=>$tester,'programer'=>$programer,'value_id'=>$value_id]);
     }
 
     /**

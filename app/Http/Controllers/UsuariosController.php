@@ -43,7 +43,7 @@ class UsuariosController extends AppBaseController
         }
 
         $users = \App\Models\Users::whereIn('id',$usu_items_id)->select('name','id')->get();
-        $rolles = \App\Models\Rolles::whereIn('id',$roll_items_id)->select('nombre','id')->get();
+        // $rolles = \App\Models\Rolles::whereIn('id',$roll_items_id)->select('nombre','id')->get();
         // // trae tipo operavilidad de usuario
         $operabilidad = config('options.Operability');
 
@@ -55,13 +55,13 @@ class UsuariosController extends AppBaseController
             }
         }
 
-        foreach ($usuarios as $key => $usuario) {
-            foreach ($rolles as $key2 => $rolle) {
-                if ($usuario->roll_id==$rolle->id) {
-                    $usuarios[$key]->rolle_nombre = $rolle->nombre;
-                }
-            }
-        }
+        // foreach ($usuarios as $key => $usuario) {
+        //     foreach ($rolles as $key2 => $rolle) {
+        //         if ($usuario->roll_id==$rolle->id) {
+        //             $usuarios[$key]->rolle_nombre = $rolle->nombre;
+        //         }
+        //     }
+        // }
 
         foreach ($usuarios as $key => $usuario) {
             foreach ($operabilidad as $key2 => $ope) {
@@ -86,12 +86,12 @@ class UsuariosController extends AppBaseController
         $users = \App\Models\Users::pluck('name','id');
 
         // trae los Rolles
-        $rolles = \App\Models\Rolles::pluck('nombre','id');
+        // $rolles = \App\Models\Rolles::pluck('nombre','id');
 
         // // trae tipo operavilidad de usuario
         $operabilidad = config('options.Operability');
 
-        return view('usuarios.create')->with(['users'=>$users,'rolles'=>$rolles,'operabilidad'=>$operabilidad]);
+        return view('usuarios.create')->with(['users'=>$users,'operabilidad'=>$operabilidad]);
     }
 
     /**
@@ -130,8 +130,8 @@ class UsuariosController extends AppBaseController
         }
 
         //nombre de historias
-        $rolles = \App\Models\Rolles::where('id',$usuarios->roll_id)->select('nombre','id')->first();
-        $usuarios->roll_nombre = $rolles->nombre ?? '';
+        // $rolles = \App\Models\Rolles::where('id',$usuarios->roll_id)->select('nombre','id')->first();
+        // $usuarios->roll_nombre = $rolles->nombre ?? '';
 
         //nombre de usuarios
         $users = \App\Models\Users::where('id',$usuarios->user_id)->select('name','id')->first();
@@ -174,9 +174,9 @@ class UsuariosController extends AppBaseController
         $users = \App\Models\Users::pluck('name','id');
 
         // trae los Rolles
-        $rolles = \App\Models\Rolles::pluck('nombre','id');
+        // $rolles = \App\Models\Rolles::pluck('nombre','id');
 
-        return view('usuarios.edit')->with(['usuarios'=>$usuarios,'users'=>$users,'rolles'=>$rolles,'operabilidad'=>$operabilidad]);
+        return view('usuarios.edit')->with(['usuarios'=>$usuarios,'users'=>$users,'operabilidad'=>$operabilidad]);
     }
 
     /**

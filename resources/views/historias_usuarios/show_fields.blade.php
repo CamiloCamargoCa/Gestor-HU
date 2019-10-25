@@ -47,7 +47,8 @@
         <!-- Reque Interfaz Field -->
         <div class="form-group">
             <b>{!! Form::label('reque_interfaz', 'Reque Interfaz:') !!}</b>
-            <p>{!! $historiasUsuarios->reque_interfaz !!}</p>
+            {{-- <p>{!! $historiasUsuarios->reque_interfaz !!}</p> --}}
+            <td><a href="{{ asset($historiasUsuarios->reque_interfaz) }}" alt="" target="_blank">ver</a></td>
         </div>
     </div>
 </div>

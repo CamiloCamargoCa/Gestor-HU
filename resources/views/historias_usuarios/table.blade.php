@@ -24,7 +24,8 @@
             {{-- <td>{!! $historiasUsuarios->roll_id !!}</td> --}}
             <td>{!! $historiasUsuarios->rolle_nombre !!}</td>
             <td>{!! $historiasUsuarios->descripcion !!}</td>
-            <td>{!! $historiasUsuarios->reque_interfaz !!}</td>
+            {{-- <td>{!! $historiasUsuarios->reque_interfaz !!}</td> --}}
+            <td><a href="{{ asset($historiasUsuarios->reque_interfaz) }}" alt="" target="_blank">ver</a></td>
             {{-- <td>{!! $historiasUsuarios->dependencia !!}</td> --}}
             <td>{!! $historiasUsuarios->historia_nombre !!}</td>
                 <td>

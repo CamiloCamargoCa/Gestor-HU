@@ -11,7 +11,7 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($historiasUsuarios, ['route' => ['historiasUsuarios.update', $historiasUsuarios->id], 'method' => 'patch']) !!}
+                   {!! Form::model($historiasUsuarios, ['route' => ['historiasUsuarios.update', $historiasUsuarios->id], 'method' => 'patch','enctype' => 'multipart/form-data']) !!}
 
                         @include('historias_usuarios.fields')
 

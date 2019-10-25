@@ -15,9 +15,8 @@ class CreateUsuariosTable extends Migration {
 		Schema::create('usuarios', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('user_id')->nullable()->index('user_id');
+			$table->integer('user_id')->nullable();
 			$table->boolean('operatividad')->nullable();
-			$table->integer('roll_id')->nullable()->index('roll_id');
 			$table->timestamps();
 			$table->softDeletes();
 		});

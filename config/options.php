@@ -60,6 +60,22 @@ return [
         '8' => 'Tester',
         '9' => 'Arquitecto',
         '10' => 'Documentador',
+    ],
+    'tamano_estimado' => [
+        'VS' => 'VS',
+        'S' => 'S',
+        'M' => 'M',
+        'L' => 'L',
+        'XL' => 'XL',
+        'XXL' => 'XXL',
+    ],
+    'status_hu' => [
+        '1' => 'pendiente',
+        '2' => 'planeada',
+        '3' => 'en desarrollo',
+        '4' => 'en pruebas',
+        '5' => 'Completada',
+        '6' => 'Cancelada',
     ]
 ];
 

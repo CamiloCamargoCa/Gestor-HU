@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use Illuminate\Support\Facades\Storage;
 
 class HistoriasUsuariosController extends AppBaseController
 {
@@ -109,6 +110,17 @@ class HistoriasUsuariosController extends AppBaseController
 
         $historiasUsuarios = $this->historiasUsuariosRepository->create($input);
 
+        if ($request->file('reque_interfaz')) {
+            $path = Storage::disk('public')->put('RequeInterfaz/'.$historiasUsuarios->id,$request->file('reque_interfaz'));
+            $historiasUsuarios->fill(['image'=>asset($path)])->save();
+        }
+
+        if ($request->file('reque_interfaz')) {
+            $historiasUsuarios = \App\Models\HistoriasUsuarios::findOrFail($historiasUsuarios->id);
+            $historiasUsuarios->reque_interfaz = $path;
+            $historiasUsuarios->save();
+        }
+
         Flash::success('Historias Usuarios saved successfully.');
 
         return redirect(route('historiasUsuarios.index'));
@@ -139,7 +151,7 @@ class HistoriasUsuariosController extends AppBaseController
         $historias = \App\Models\HistoriasUsuarios::where('id',$historiasUsuarios->dependencia)->select('titulo_historia','id')->first();
         $historiasUsuarios->historia_nombre = $historias->titulo_historia ?? '';
 
-        //nombre de historias
+        //nombre de roll
         $rolles = \App\Models\Rolles::where('id',$historiasUsuarios->roll_id)->select('nombre','id')->first();
         $historiasUsuarios->roll_nombre = $rolles->nombre ?? '';
 
@@ -197,6 +209,17 @@ class HistoriasUsuariosController extends AppBaseController
         }
 
         $historiasUsuarios = $this->historiasUsuariosRepository->update($request->all(), $id);
+
+        if ($request->file('reque_interfaz')) {
+            $path = Storage::disk('public')->put('RequeInterfaz/'.$historiasUsuarios->id,$request->file('reque_interfaz'));
+            $historiasUsuarios->fill(['image'=>asset($path)])->save();
+        }
+
+        if ($request->file('reque_interfaz')) {
+            $historiasUsuarios = \App\Models\HistoriasUsuarios::findOrFail($historiasUsuarios->id);
+            $historiasUsuarios->reque_interfaz = $path;
+            $historiasUsuarios->save();
+        }
 
         Flash::success('Historias Usuarios updated successfully.');
 
