@@ -29,7 +29,15 @@ class CriteriosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $criterios = $this->criteriosRepository->all();
+        // $criterios = $this->criteriosRepository->all();
+        $criterios = \App\Models\Criterios::select('*');
+        if (isset($request['proyectos1']) && $request['proyectos1'] != '') {
+            $criterios->where('id_proyecto',$request['proyectos1']);
+        }
+        if (isset($request['historia1']) && $request['historia1'] != '') {
+            $criterios->where('id_historia',$request['historia1']);
+        }
+        $criterios = $criterios->orderBy('id','asc')->paginate(20);
 
         //devuelve la categoria de un producto
         $proy_items_id=[];
@@ -58,8 +66,14 @@ class CriteriosController extends AppBaseController
             }
         }
 
+        // trae los proyectos
+        $proyectos1 = \App\Models\Proyectos::pluck('nombre','id');
+
+        // trae otras historias de usuario
+        $historias1 = \App\Models\HistoriasUsuarios::pluck('titulo_historia','id');
+
         return view('criterios.index')
-            ->with('criterios', $criterios);
+            ->with(['criterios'=>$criterios,'proyectos1'=>$proyectos1,'historias1'=>$historias1]);
     }
 
     /**

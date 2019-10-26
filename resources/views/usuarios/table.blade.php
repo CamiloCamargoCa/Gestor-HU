@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th>Id Registro</th>
-                <th>User</th>
+                <th>Usuario</th>
                 <th>Operatividad</th>
                 {{-- <th>Roll Id</th> --}}
                 <th colspan="3">Acción</th>

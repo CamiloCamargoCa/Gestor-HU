@@ -29,8 +29,15 @@ class UsuariosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $usuarios = $this->usuariosRepository->all();
-
+        // $usuarios = $this->usuariosRepository->all();
+        $usuarios = \App\Models\Usuarios::select('*');
+        if (isset($request['users1']) && $request['users1'] != '') {
+            $usuarios->where('user_id',$request['users1']);
+        }
+        if (isset($request['operatividad1']) && $request['operatividad1'] != '') {
+            $usuarios->where('operatividad',$request['operatividad1']);
+        }
+        $usuarios = $usuarios->orderBy('id','asc')->paginate(20);
         //devuelve la categoria de un producto
         $usu_items_id=[];
         $roll_items_id=[];
@@ -43,7 +50,7 @@ class UsuariosController extends AppBaseController
         }
 
         $users = \App\Models\Users::whereIn('id',$usu_items_id)->select('name','id')->get();
-        // $rolles = \App\Models\Rolles::whereIn('id',$roll_items_id)->select('nombre','id')->get();
+
         // // trae tipo operavilidad de usuario
         $operabilidad = config('options.Operability');
 
@@ -55,14 +62,6 @@ class UsuariosController extends AppBaseController
             }
         }
 
-        // foreach ($usuarios as $key => $usuario) {
-        //     foreach ($rolles as $key2 => $rolle) {
-        //         if ($usuario->roll_id==$rolle->id) {
-        //             $usuarios[$key]->rolle_nombre = $rolle->nombre;
-        //         }
-        //     }
-        // }
-
         foreach ($usuarios as $key => $usuario) {
             foreach ($operabilidad as $key2 => $ope) {
                 if ($usuario->operatividad==$key2) {
@@ -71,8 +70,14 @@ class UsuariosController extends AppBaseController
             }
         }
 
+        // trae los users
+        $users1 = \App\Models\Users::pluck('name','id');
+
+        // // trae tipo operavilidad de usuario
+        $operabilidad1 = config('options.Operability');
+
         return view('usuarios.index')
-            ->with('usuarios', $usuarios);
+            ->with(['usuarios'=>$usuarios,'users1'=>$users1,'operabilidad1'=>$operabilidad1]);
     }
 
     /**

@@ -29,7 +29,15 @@ class RollesController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $rolles = $this->rollesRepository->all();
+        // $rolles = $this->rollesRepository->all();
+        $rolles = \App\Models\Rolles::select('*');
+        if (isset($request['name']) && $request['name'] != '') {
+            $rolles->where('nombre','like','%'.$request['name'].'%');
+        }
+        if (isset($request['proyectos']) && $request['proyectos'] != '') {
+            $rolles->where('id_proyecto',$request['proyectos']);
+        }
+        $rolles = $rolles->orderBy('nombre','asc')->paginate(20);
 
         //devuelve la categoria de un producto
         $proy_items_id=[];
@@ -46,8 +54,11 @@ class RollesController extends AppBaseController
             }
         }
 
+        // trae los proyectos
+        $proyectos = \App\Models\Proyectos::pluck('nombre','id');
+
         return view('rolles.index')
-            ->with('rolles', $rolles);
+            ->with(['rolles'=>$rolles,'proyectos'=>$proyectos]);
     }
 
     /**

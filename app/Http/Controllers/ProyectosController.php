@@ -29,7 +29,14 @@ class ProyectosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $proyectos = $this->proyectosRepository->all();
+        // $proyectos = $this->proyectosRepository->all();
+        $proyectos = \App\Models\Proyectos::select('*');
+
+        if (isset($request['name']) && $request['name'] != '') {
+            $proyectos->where('nombre','like','%'.$request['name'].'%');
+        }
+
+        $proyectos = $proyectos->orderBy('nombre','asc')->paginate(20);
 
         return view('proyectos.index')
             ->with('proyectos', $proyectos);
