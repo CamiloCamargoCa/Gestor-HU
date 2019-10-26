@@ -29,7 +29,24 @@ class EmpleadosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $empleados = $this->empleadosRepository->all();
+        // $empleados = $this->empleadosRepository->all();
+        $empleados = \App\Models\Empleados::select('*');
+        if (isset($request['name']) && $request['name'] != '') {
+            $empleados->where('nombre','like','%'.$request['name'].'%');
+        }
+        if (isset($request['cedula']) && $request['cedula'] != '') {
+            $empleados->where('cedula','like','%'.$request['cedula'].'%');
+        }
+        if (isset($request['estado']) && $request['estado'] != '') {
+            $empleados->where('Estado',$request['estado']);
+        }
+        if (isset($request['proyectos']) && $request['proyectos'] != '') {
+            $empleados->where('id_proyecto',$request['proyectos']);
+        }
+        if (isset($request['rolles']) && $request['rolles'] != '') {
+            $empleados->where('id_roll',$request['rolles']);
+        }
+        $empleados = $empleados->orderBy('nombre','asc')->paginate(20);
 
          //devuelve la categoria de un producto
         $proy_items_id=[];
@@ -73,8 +90,17 @@ class EmpleadosController extends AppBaseController
             }
         }
 
+        // // trae los roles
+        $estadosemp1 = config('options.status_emp');
+
+        // trae los proyectos
+        $proyectos1 = \App\Models\Proyectos::pluck('nombre','id');
+
+        // trae los Rolles
+        $rolles1 = \App\Models\Rolles::pluck('nombre','id');
+
         return view('empleados.index')
-            ->with('empleados', $empleados);
+            ->with(['empleados'=>$empleados,'estadosemp1'=>$estadosemp1,'proyectos1'=>$proyectos1,'rolles1'=>$rolles1]);
     }
 
     /**
