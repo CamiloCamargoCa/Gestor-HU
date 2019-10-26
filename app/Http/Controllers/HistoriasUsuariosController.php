@@ -30,8 +30,24 @@ class HistoriasUsuariosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $historiasUsuarios = $this->historiasUsuariosRepository->all();
-
+        // $historiasUsuarios = $this->historiasUsuariosRepository->all();
+        $historiasUsuarios = \App\Models\HistoriasUsuarios::select('*');
+        if (isset($request['tipo_historia']) && $request['tipo_historia'] != '') {
+            $historiasUsuarios->where('tipo_historia','like','%'.$request['tipo_historia'].'%');
+        }
+        if (isset($request['titulo']) && $request['titulo'] != '') {
+            $historiasUsuarios->where('titulo_historia','like','%'.$request['titulo'].'%');
+        }
+        if (isset($request['proyectos']) && $request['proyectos'] != '') {
+            $historiasUsuarios->where('id_proyecto',$request['proyectos']);
+        }
+        if (isset($request['rolles']) && $request['rolles'] != '') {
+            $historiasUsuarios->where('roll_id',$request['rolles']);
+        }
+        if (isset($request['id']) && $request['id'] != '') {
+            $historiasUsuarios->where('id',$request['id']);
+        }
+        $historiasUsuarios = $historiasUsuarios->orderBy('titulo_historia','asc')->paginate(20);
 
         //devuelve la categoria de un producto
         $proy_items_id=[];
@@ -71,8 +87,17 @@ class HistoriasUsuariosController extends AppBaseController
             }
         }
 
+        // trae los proyectos
+        $proyectos1 = \App\Models\Proyectos::pluck('nombre','id');
+
+        // trae los Rolles
+        $rolles1 = \App\Models\Rolles::pluck('nombre','id');
+
+        // trae otras historias de usuario
+        $historias1 = \App\Models\HistoriasUsuarios::pluck('titulo_historia','id');
+
         return view('historias_usuarios.index')
-            ->with('historiasUsuarios', $historiasUsuarios);
+            ->with(['historiasUsuarios'=>$historiasUsuarios,'proyectos1'=>$proyectos1,'rolles1'=>$rolles1,'historias1'=>$historias1]);
     }
 
     /**

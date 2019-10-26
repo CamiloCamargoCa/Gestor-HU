@@ -30,7 +30,24 @@ class HistoriasDetalleController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $historiasDetalles = $this->historiasDetalleRepository->all();
+        // $historiasDetalles = $this->historiasDetalleRepository->all();
+        $historiasDetalles = \App\Models\HistoriasDetalle::select('*');
+        if (isset($request['id']) && $request['id'] != '') {
+            $historiasDetalles->where('id',$request['id']);
+        }
+        if (isset($request['tamano']) && $request['tamano'] != '') {
+            $historiasDetalles->where('tamaño',$request['tamano']);
+        }
+        if (isset($request['estado']) && $request['estado'] != '') {
+            $historiasDetalles->where('estado',$request['estado']);
+        }
+        if (isset($request['programer']) && $request['programer'] != '') {
+            $historiasDetalles->where('id_desarrollador',$request['programer']);
+        }
+        if (isset($request['tester']) && $request['tester'] != '') {
+            $historiasDetalles->where('id_tester',$request['tester']);
+        }
+        $historiasDetalles = $historiasDetalles->orderBy('id','asc')->paginate(20);
 
         //devuelve la categoria de un producto
         $histo_items_id=[];
@@ -43,7 +60,7 @@ class HistoriasDetalleController extends AppBaseController
             $tester_items_id[]=$historiasDetalle->id_tester;
             $programer_items_id[]=$historiasDetalle->id_desarrollador;
             $user_items_id[]=$historiasDetalle->id_usuario;
-            $statu_items_id[]=$historiasDetalle->estado;
+            $statu_items_id[]=$historiasDetalle->programer;
         }
 
          $historias = \App\Models\HistoriasUsuarios::whereIn('id',$histo_items_id)->select('titulo_historia','id')->get();
@@ -99,8 +116,23 @@ class HistoriasDetalleController extends AppBaseController
             }
         }
 
+        // trae otras historias de usuario
+        $historias1 = \App\Models\HistoriasUsuarios::pluck('titulo_historia','id');
+
+        // trae el tamaño de la historia
+        $tamano1 = config('options.tamano_estimado');
+
+        // trae el estado de la historia
+        $status_hu1 = config('options.status_hu');
+
+        // tester
+        $tester1 = \App\Models\Usuarios::join('users','users.id','user_id')->where('usuarios.operatividad',2)->pluck('name','user_id');
+
+        // programador
+        $programer1 = \App\Models\Usuarios::join('users','users.id','user_id')->where('usuarios.operatividad',1)->pluck('name','user_id');
+
         return view('historias_detalles.index')
-            ->with('historiasDetalles', $historiasDetalles);
+            ->with(['historiasDetalles'=> $historiasDetalles,'historias1'=>$historias1,'tamano1'=>$tamano1,'status_hu1'=>$status_hu1,'tester1'=>$tester1,'programer1'=>$programer1]);
     }
 
     /**
