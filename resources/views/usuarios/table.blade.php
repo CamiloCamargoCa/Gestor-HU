@@ -5,7 +5,9 @@
                 <th>Id Registro</th>
                 <th>Usuario</th>
                 <th>Operatividad</th>
-                {{-- <th>Roll Id</th> --}}
+                <th>Horas Semanales</th>
+                <th>Horas Planeadas</th>
+                <th>Horas Reales</th>        
                 <th colspan="3">Acción</th>
             </tr>
         </thead>
@@ -17,8 +19,9 @@
                 <td>{!! $usuarios->user_nombre !!}</td>
             <td>{!! $usuarios->ope_nombre !!}</td>
             {{-- <td>{!! $usuarios->operatividad !!}</td> --}}
-            {{-- <td>{!! $usuarios->rolle_nombre !!}</td> --}}
-            {{-- <td>{!! $usuarios->roll_id !!}</td> --}}
+            <td>{!! $usuarios->horas_semanales !!}</td>
+            <td>{!! $usuarios->horas_planeadas !!}</td>
+            <td>{!! $usuarios->horas_reales !!}</td>
                 <td>
                     {!! Form::open(['route' => ['usuarios.destroy', $usuarios->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

@@ -14,11 +14,23 @@
     <b></label> --}}
 </div>
 
-<!-- Roll Id Field -->
-{{-- <div class="form-group col-sm-6">
-    <b>{!! Form::label('roll_id', 'Roll:') !!}</b>
-    {!! Form::select('roll_id', $rolles, null, ['class' => 'form-control', 'placeholder'=>'Seleccione una Opción']) !!}
-</div> --}}
+<!-- Horas Semanales Field -->
+<div class="form-group col-sm-6">
+    <b>{!! Form::label('horas_semanales', 'Horas Semanales:') !!}</b>
+    {!! Form::number('horas_semanales', null, ['class' => 'form-control', 'placeholder'=>'Seleccione una Opción']) !!}
+</div>
+
+<!-- Horas Planeadas Field -->
+<div class="form-group col-sm-6">
+    <b>{!! Form::label('horas_planeadas', 'Horas Planeadas:') !!}</b>
+    {!! Form::number('horas_planeadas', null, ['class' => 'form-control', 'placeholder'=>'Seleccione una Opción']) !!}
+</div>
+
+<!-- Horas Reales Field -->
+<div class="form-group col-sm-6">
+    <b>{!! Form::label('horas_reales', 'Horas Reales:') !!}</b>
+    {!! Form::number('horas_reales', null, ['class' => 'form-control', 'placeholder'=>'Seleccione una Opción']) !!}
+</div>
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

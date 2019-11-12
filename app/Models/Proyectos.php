@@ -29,7 +29,16 @@ class Proyectos extends Model
 
     public $fillable = [
         'id',
-        'nombre'
+        'cod_proyecto',
+        'nombre',
+        'id_gerente',
+        'nombre_gerente',
+        'fec_ini_planeada',
+        'fec_ini_real',
+        'fec_fin_planeada',
+        'fec_fin_real',
+        'esfu_planeado',
+        'esfu_real'
     ];
 
     /**
@@ -39,7 +48,16 @@ class Proyectos extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'nombre' => 'string'
+        'cod_proyecto' => 'string',
+        'nombre' => 'string',
+        'id_gerente' => 'integer',
+        'nombre_gerente' => 'string',
+        'fec_ini_planeada' => 'date',
+        'fec_ini_real' => 'date',
+        'fec_fin_planeada' => 'date',
+        'fec_fin_real' => 'date',
+        'esfu_planeado' => 'integer',
+        'esfu_real' => 'integer'
     ];
 
     /**

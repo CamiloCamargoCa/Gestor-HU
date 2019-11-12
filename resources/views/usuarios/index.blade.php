@@ -5,7 +5,7 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <h1 class="pull-left">Usuarios</h1>
+                <h1 class="pull-left">Equipo de Proyecto</h1>
             </div>
         </div>
         {!! Form::open(['route' => 'usuarios.index', 'method' => 'get']) !!}

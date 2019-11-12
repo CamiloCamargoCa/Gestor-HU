@@ -48,6 +48,7 @@ return [
         '0' => 'Ninguno',
         '1' => 'Programador',
         '2' => 'Tester',
+        '3' => 'Gerente',
     ],
     'team_develop' => [
         '1' => 'Product Owner',

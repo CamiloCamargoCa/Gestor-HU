@@ -1,10 +1,10 @@
 
 <li class="{{ Request::is('users*') ? 'active' : '' }}">
-    <a href="{!! route('users.index') !!}"><i class="fa fa-user"></i><span>Registrados</span></a>
+    <a href="{!! route('users.index') !!}"><i class="fa fa-user"></i><span>Usuarios</span></a>
 </li>
 
 <li class="{{ Request::is('usuarios*') ? 'active' : '' }}">
-    <a href="{!! route('usuarios.index') !!}"><i class="fa fa-address-card-o"></i><span>Usuarios</span></a>
+    <a href="{!! route('usuarios.index') !!}"><i class="fa fa-address-card-o"></i><span>Equipos</span></a>
 </li>
 
 <li class="{{ Request::is('proyectos*') ? 'active' : '' }}">
@@ -26,8 +26,6 @@
 <li class="{{ Request::is('historiasDetalles*') ? 'active' : '' }}">
     <a href="{!! route('historiasDetalles.index') !!}"><i class="fa fa-edit"></i><span>Planeación</span></a>
 </li>
-
-
 
 <li class="{{ Request::is('empleados*') ? 'active' : '' }}">
     <a href="{!! route('empleados.index') !!}"><i class="fa fa-edit"></i><span>Empleados</span></a>

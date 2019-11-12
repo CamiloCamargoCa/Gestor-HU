@@ -16,12 +16,14 @@ class CreateUsuariosTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('user_id')->nullable();
-			$table->boolean('operatividad')->nullable();
+			$table->integer('operatividad')->nullable();
+			$table->integer('horas_semanales')->nullable();
+			$table->integer('horas_planeadas')->nullable();
+			$table->integer('horas_reales')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.

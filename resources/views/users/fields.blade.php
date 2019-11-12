@@ -16,14 +16,14 @@
     {!! Form::date('email_verified_at', null, ['class' => 'form-control','id'=>'email_verified_at']) !!}
 </div> --}}
 
-{{-- @section('scripts')
+@section('scripts')
     <script type="text/javascript">
         $('#email_verified_at').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             useCurrent: false
         })
     </script>
-@endsection --}}
+@endsection
 
 <!-- Password Field -->
 <div class="form-group col-sm-6">

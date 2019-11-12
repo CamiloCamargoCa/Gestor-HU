@@ -3,7 +3,16 @@
         <thead>
             <tr>
                 <th>Id Proyecto</th>
+                <th>Codigo</th>
                 <th>Nombre</th>
+                <th>Id Gerente</th>
+                <th>Gerente</th>
+                <th>Fech. Inicio Planeación</th>
+                <th>Fech. Inicio Real</th>
+                <th>Fech. Fin Planeación</th>
+                <th>Fech. Fin Real</th>
+                <th>Esfuerzo Planeado</th>
+                <th>Esfuerzo Real</th>
                 <th colspan="3">Acción</th>
             </tr>
         </thead>
@@ -11,7 +20,16 @@
         @foreach($proyectos as $proyectos)
             <tr>
                 <td>{!! $proyectos->id !!}</td>
+                <td>{!! $proyectos->cod_proyecto !!}</td>
                 <td>{!! $proyectos->nombre !!}</td>
+                <td>{!! $proyectos->id_gerente !!}</td>
+                <td>{!! $proyectos->nombre_gerente !!}</td>
+                <td>{!! $proyectos->fec_ini_planeada !!}</td>
+                <td>{!! $proyectos->fec_ini_real !!}</td>
+                <td>{!! $proyectos->fec_fin_planeada !!}</td>
+                <td>{!! $proyectos->fec_fin_real !!}</td>
+                <td>{!! $proyectos->esfu_planeado !!}</td>
+                <td>{!! $proyectos->esfu_real !!}</td>
                 <td>
                     {!! Form::open(['route' => ['proyectos.destroy', $proyectos->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

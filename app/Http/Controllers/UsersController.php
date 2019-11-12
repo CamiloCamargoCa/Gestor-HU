@@ -7,6 +7,9 @@ use App\Http\Requests\UpdateUsersRequest;
 use App\Repositories\UsersRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Flash;
 use Response;
 
@@ -55,6 +58,7 @@ class UsersController extends AppBaseController
     public function store(CreateUsersRequest $request)
     {
         $input = $request->all();
+        $input['password'] = Hash::make($request['password']);
 
         $users = $this->usersRepository->create($input);
 
@@ -120,6 +124,14 @@ class UsersController extends AppBaseController
 
             return redirect(route('users.index'));
         }
+
+        $concifrada = Hash::make($request->password);
+        $request['password'] = $concifrada;
+
+        // echo '<pre>';
+        // print_r($request->all());
+        // echo '</pre>';
+        // exit;
 
         $users = $this->usersRepository->update($request->all(), $id);
 

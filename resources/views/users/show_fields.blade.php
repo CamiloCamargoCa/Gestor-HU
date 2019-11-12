@@ -24,13 +24,13 @@
             <p>{!! $users->email !!}</p>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    {{-- <div class="col-xs-12 col-sm-6">
         <!-- Password Field -->
         <div class="form-group">
             <b>{!! Form::label('password', 'Contraseña:') !!}</b>
             <p>{!! $users->password !!}</p>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 <!-- Email Verified At Field -->

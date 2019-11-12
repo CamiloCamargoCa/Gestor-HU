@@ -30,7 +30,10 @@ class Usuarios extends Model
 
     public $fillable = [
         'user_id',
-        'operatividad'
+        'operatividad',
+        'horas_semanales',
+        'horas_planeadas',
+        'horas_reales'
     ];
 
     /**
@@ -41,7 +44,10 @@ class Usuarios extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'operatividad' => 'integer'
+        'operatividad' => 'integer',
+        'horas_semanales' => 'integer',
+        'horas_planeadas' => 'integer',
+        'horas_reales' => 'integer'
     ];
 
     /**
