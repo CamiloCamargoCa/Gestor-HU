@@ -174,6 +174,10 @@ class HistoriasDetalleController extends AppBaseController
     {
         $input = $request->all();
 
+        // echo '<pre>';
+        // print_r($input);
+        // exit;
+        
         $historiasDetalle = $this->historiasDetalleRepository->create($input);
 
         Flash::success('Historias Detalle saved successfully.');

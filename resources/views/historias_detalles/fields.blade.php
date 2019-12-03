@@ -13,7 +13,7 @@
 <!-- Esfuerzo Horas Field -->
 <div class="form-group col-sm-6">
     <b>{!! Form::label('esfuerzo_horas', 'Esfuerzo Horas:') !!}</b>
-    {!! Form::number('esfuerzo_horas', null, ['class' => 'form-control']) !!}
+    {!! Form::number('esfuerzo_horas', null, ['class' => 'form-control', 'readonly'=>'true']) !!}
 </div>
 
 <!-- Num Sprint Field -->

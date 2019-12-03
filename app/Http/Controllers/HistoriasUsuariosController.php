@@ -47,7 +47,7 @@ class HistoriasUsuariosController extends AppBaseController
         if (isset($request['id']) && $request['id'] != '') {
             $historiasUsuarios->where('id',$request['id']);
         }
-        $historiasUsuarios = $historiasUsuarios->orderBy('titulo_historia','asc')->paginate(20);
+        $historiasUsuarios = $historiasUsuarios->orderBy('id','asc')->paginate(20);
 
         //devuelve la categoria de un producto
         $proy_items_id=[];
@@ -134,6 +134,12 @@ class HistoriasUsuariosController extends AppBaseController
         $input = $request->all();
 
         $historiasUsuarios = $this->historiasUsuariosRepository->create($input);
+        $idHuTemp = $historiasUsuarios->id;
+        $token=$input['_token'];
+
+        \App\Models\historiasDetalle::insert([
+            ['id_historia' => $idHuTemp, 'estado' => 1, 'esfuerzo_horas' => 0]
+        ]);
 
         if ($request->file('reque_interfaz')) {
             $path = Storage::disk('public')->put('RequeInterfaz/'.$historiasUsuarios->id,$request->file('reque_interfaz'));
